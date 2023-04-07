@@ -1,3 +1,6 @@
+import java.net.URI
+import java.util.*
+
 plugins {
     kotlin("jvm") version "1.8.0"
     `java-library`
@@ -35,6 +38,20 @@ publishing {
             groupId = group.toString()
             artifactId = "retrofit2-proxy"
             from(components["java"])
+        }
+    }
+
+    repositories {
+        maven {
+            name = "github"
+            url = URI("https://maven.pkg.github.com/Adlyq/RetrofitProxy")
+            credentials {
+                val prop = Properties().apply {
+                    load(File("local.properties").inputStream())
+                }
+                username = prop["github.user"]?.toString()
+                password = prop["github.token"]?.toString()
+            }
         }
     }
 }
