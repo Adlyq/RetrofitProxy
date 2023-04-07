@@ -2,6 +2,7 @@ package ml.adlyq.retrofit2.proxy
 
 import java.lang.reflect.*
 import kotlin.coroutines.Continuation
+import kotlin.coroutines.cancellation.CancellationException
 import kotlin.coroutines.intrinsics.intercepted
 
 inline fun <reified T> T.retrofitProxy(): T {
@@ -37,10 +38,14 @@ class FakeSuccessContinuationWrapper(
     override val context = original.context
 
     override fun resumeWith(result: Result<Any>) {
-        if (result.isSuccess)
+        result.onSuccess {
             original.resumeWith(result)
-        else
-            original.resumeWith(Result.success(result))
+        }.onFailure {
+            if (it is CancellationException)
+                original.resumeWith(result)
+            else
+                original.resumeWith(Result.success(result))
+        }
     }
 
 }
