@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "ml.adlyq"
-version = "1.1"
+version = "1.2"
 
 repositories {
     mavenCentral()
@@ -25,7 +25,7 @@ tasks.test {
 }
 
 kotlin {
-    jvmToolchain(11)
+    jvmToolchain(8)
 }
 
 java {
