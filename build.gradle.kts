@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "ml.adlyq"
-version = "1.2"
+version = "2.0"
 
 repositories {
     mavenCentral()
@@ -16,6 +16,10 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
+    testImplementation("com.squareup.okhttp3:okhttp:5.0.0-alpha.10")
+    testImplementation("com.squareup.retrofit2:retrofit:2.9.0")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+
     compileOnly("com.squareup.okhttp3:okhttp:5.0.0-alpha.10")
     compileOnly("com.squareup.retrofit2:retrofit:2.9.0")
 }

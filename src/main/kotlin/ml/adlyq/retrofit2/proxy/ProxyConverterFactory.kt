@@ -32,7 +32,14 @@ class ProxyConverterFactory: Converter.Factory() {
                     annotations
                 )
             Converter {
-                Result.success(nextCon.convert(it))
+                runCatching {
+                    (nextCon.convert(it)).also {
+                        if (it?.javaClass !== inType)
+                            throw ClassCastException(
+                                "${it?.javaClass} cannot be cast to $inType"
+                            )
+                    }
+                }
             }
         }
 }
